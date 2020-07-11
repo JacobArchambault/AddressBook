@@ -29,7 +29,7 @@ namespace AddressBook
         // Prompts the user to to enter a field value and returns the user's input.
         private static string GetFieldFromUser(string desiredField)
         {
-            WriteLine($"Enter your {desiredField}: ");
+            WriteLine($"Enter the entry's {desiredField}: ");
             return ReadLine();
         }
 
@@ -47,7 +47,7 @@ namespace AddressBook
         {
 
             Regex regex = new Regex(@"\d{3}-\d{3}-\d{4}");
-            WriteLine("Enter your phone number, including area code: ");
+            WriteLine("Enter the entry phone number, including area code: ");
             phoneNumber = ReadLine();
             // ensures that the phone number matches the format XXX-XXX-XXXX and has exactly 12 characters.
             return regex.IsMatch(phoneNumber) && phoneNumber.Length == 12;

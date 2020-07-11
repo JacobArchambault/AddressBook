@@ -11,6 +11,7 @@ namespace AddressBook
     {
         private static void Main(string[] args)
         {
+            WriteLine("Welcome to the address book maker app! Let's start adding some entries.");
             // Create a list of entries from user prompts.
             List<Entry> entries = AddEntriesToList();
             // Add entries from the entries list to the file phone-book.txt.
