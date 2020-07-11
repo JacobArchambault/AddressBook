@@ -11,13 +11,19 @@ namespace AddressBook
     {
         static void Main(string[] args)
         {
+            AddEntries();
+        }
+
+        static List<Entry> AddEntries()
+        {
+            List<Entry> entries = new List<Entry> { };
             do
             {
                 Entry entry = AddNewEntry();
-                WriteLine($"{entry.Name}, {entry.Address}, {entry.PhoneNumber}");
+                entries.Add(entry);
             } while (Continue() == "1");
+            return entries;
         }
-
         static string Continue()
         {
             WriteLine("Press enter 1 to add another entry. Enter any other key to exit");
