@@ -17,13 +17,13 @@ namespace AddressBook
                 Entry entry = CreateNewEntry();
                 entries.Add(entry);
                 // Add another entry if the user presses 1 when prompted to continue.
-            } while (Continue() == "1");
+            } while (Continue());
             return entries;
         }
 
         private static Entry CreateNewEntry()
         {
-            // Create a new entry, getting name and address, and phone number from user prompts
+            // Create a new entry, getting name, email address, and phone number from user prompts
             return new Entry { Name = GetFieldFromUser("name"), EmailAddress = GetEmailAddress(), PhoneNumber = GetPhoneNumber() };
         }
         // Prompts the user to to enter a field value and returns the user's input.
@@ -42,8 +42,6 @@ namespace AddressBook
             }
             return email;
         }
-
-
         private static bool EmailAddressIsValidFormat(out string email)
         {
 
@@ -76,10 +74,10 @@ namespace AddressBook
         }
 
         // prompts the user for whether s/he wishes to add another entry and returns the user's response.
-        private static string Continue()
+        private static bool Continue()
         {
             WriteLine("Press enter 1 to add another entry. Enter any other key to exit");
-            return ReadLine();
+            return ReadLine() == "1";
         }
 
     }
