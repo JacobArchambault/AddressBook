@@ -9,7 +9,7 @@ namespace AddressBook
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             WriteLine("Welcome to the address book maker app! Let's start adding some entries.");
             // Create a list of entries from user prompts.
