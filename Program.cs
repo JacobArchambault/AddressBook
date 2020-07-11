@@ -7,6 +7,7 @@ using System.Transactions;
 using static System.Console;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
 
 namespace AddressBook
 {
@@ -16,7 +17,7 @@ namespace AddressBook
         {
             List<Entry> entries = AddEntriesToList();
             AddEntries(entries, "phone-book.txt");
-            OpenTextWithNotepad("phone-book.txt");
+            OpenTextFileWithNotepad("phone-book.txt");
         }
         static List<Entry> AddEntriesToList()
         {
@@ -60,7 +61,7 @@ namespace AddressBook
         }
 
 
-        static void OpenTextWithNotepad(string fileName)
+        static void OpenTextFileWithNotepad(string fileName)
         {
             Process.Start("notepad.exe", fileName);
         }
@@ -71,7 +72,8 @@ namespace AddressBook
             fromEntryList.ForEach(entry =>
             {
                 int entryNumber = fromEntryList.IndexOf(entry);
-                writer.WriteLine($"Entry {entryNumber + 1}:\tName: {entry.Name},\tAddress: {entry.Address},\tphone number: {entry.PhoneNumber}");
+                string trimmedPhoneNumber = Regex.Replace(entry.PhoneNumber, "-", "");
+                writer.WriteLine($"Entry {entryNumber + 1}:\tName: {entry.Name},\tAddress: {entry.Address},\tphone number: *{trimmedPhoneNumber}*");
             });
         }
 
