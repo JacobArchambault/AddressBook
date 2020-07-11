@@ -4,7 +4,7 @@
     internal class Entry
     {
         internal string Name { get; set; }
-        internal string Address { get; set; }
+        internal string EmailAddress { get; set; }
         internal string PhoneNumber { get; set; }
     }
 }

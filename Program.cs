@@ -32,7 +32,7 @@ namespace AddressBook
                 // ...trim the phone number of dashes.
                 string trimmedPhoneNumber = Regex.Replace(entry.PhoneNumber, "-", "");
                 // ...and write that entry's number, name, address, and phone number trimmed of dashes to the file on a single line.
-                writer.WriteLine($"Entry {entryNumber + 1}:\tName: {entry.Name},\tAddress: {entry.Address},\tphone number: *{trimmedPhoneNumber}*");
+                writer.WriteLine($"Entry {entryNumber + 1}:\tName: {entry.Name},\temail address: {entry.EmailAddress},\tphone number: *{trimmedPhoneNumber}*");
             });
         }
 
