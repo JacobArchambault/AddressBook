@@ -4,10 +4,10 @@ using System.Text;
 
 namespace AddressBook
 {
-    class Entry
+    internal class Entry
     {
-        string Name { get; set; }
-        string Address { get; set; }
-        string PhoneNumber { get; set; }
+        internal string Name { get; set; }
+        internal string Address { get; set; }
+        internal string PhoneNumber { get; set; }
     }
 }
