@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
 using System.Transactions;
-using System.Text.RegularExpressions;
 using static System.Console;
 namespace AddressBook
 {
@@ -11,25 +11,36 @@ namespace AddressBook
     {
         static void Main(string[] args)
         {
-            Entry entry = NewEntry();
-            WriteLine($"{entry.Name}, {entry.Address}, {entry.PhoneNumber}");
+            do
+            {
+                Entry entry = AddNewEntry();
+                WriteLine($"{entry.Name}, {entry.Address}, {entry.PhoneNumber}");
+            } while (Continue() == "1");
         }
-        public static Entry NewEntry()
+
+        static string Continue()
         {
-            Entry entry = new Entry { };
+            WriteLine("Press enter 1 to add another entry. Enter any other key to exit");
+            return ReadLine();
+        }
+        static Entry AddNewEntry()
+        {
+            return new Entry { Name = GetFieldFromUser("name"), Address = GetFieldFromUser("address"), PhoneNumber = GetPhoneNumber() };
+        }
 
-            WriteLine("Enter your name: ");
-            entry.Name = ReadLine();
-
-            WriteLine("Enter your address: ");
-            entry.Address = ReadLine();
+        static string GetFieldFromUser(string desiredField)
+        {
+            WriteLine($"Enter your {desiredField}: ");
+            return ReadLine();
+        }
+        static string GetPhoneNumber()
+        {
             string phoneNumber;
             while (!PhoneNumberIsValidFormat(out phoneNumber))
             {
                 WriteLine("Phone number must be in the following numeric format: XXX-XXX-XXXX");
             }
-            entry.PhoneNumber = phoneNumber;
-            return entry;
+            return phoneNumber;
         }
         static bool PhoneNumberIsValidFormat(out string phoneNumber)
         {
