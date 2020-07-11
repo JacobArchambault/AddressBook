@@ -1,82 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
-using System.Transactions;
-using static System.Console;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-
+using System.IO;
+using System.Text.RegularExpressions;
+using static AddressBook.EntryListCreator;
+using static System.Console;
+using static System.IO.File;
 namespace AddressBook
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            // Create a list of entries from user prompts.
             List<Entry> entries = AddEntriesToList();
+            // Add entries from the entries list to the file phone-book.txt.
             AddEntries(entries, "phone-book.txt");
+            WriteLine("The data was stored properly. Here it is!");
+            // Open phone-book.txt with Notepad.
             OpenTextFileWithNotepad("phone-book.txt");
         }
-        static List<Entry> AddEntriesToList()
+        private static void AddEntries(List<Entry> fromEntryList, string toFile)
         {
-            List<Entry> entries = new List<Entry> { };
-            do
-            {
-                Entry entry = CreateNewEntry();
-                entries.Add(entry);
-            } while (Continue() == "1");
-            return entries;
-        }
-        static Entry CreateNewEntry()
-        {
-            return new Entry { Name = GetFieldFromUser("name"), Address = GetFieldFromUser("address"), PhoneNumber = GetPhoneNumber() };
-        }
-        static string GetFieldFromUser(string desiredField)
-        {
-            WriteLine($"Enter your {desiredField}: ");
-            return ReadLine();
-        }
-        static string GetPhoneNumber()
-        {
-            string phoneNumber;
-            while (!PhoneNumberIsValidFormat(out phoneNumber))
-            {
-                WriteLine("Phone number must be in the following numeric format: XXX-XXX-XXXX");
-            }
-            return phoneNumber;
-        }
-        static bool PhoneNumberIsValidFormat(out string phoneNumber)
-        {
-            Regex regex = new Regex(@"\d{3}-\d{3}-\d{4}");
-            WriteLine("Enter your phone number, including area code: ");
-            phoneNumber = ReadLine();
-            return regex.IsMatch(phoneNumber) && phoneNumber.Length == 12;
-        }
-        static string Continue()
-        {
-            WriteLine("Press enter 1 to add another entry. Enter any other key to exit");
-            return ReadLine();
-        }
-
-
-        static void OpenTextFileWithNotepad(string fileName)
-        {
-            Process.Start("notepad.exe", fileName);
-        }
-
-        static void AddEntries(List<Entry> fromEntryList, string toFile)
-        {
-            using StreamWriter writer = File.CreateText(toFile);
+            // Create a file with the name passed in as a string parameter, and a StreamWriter object to write to it. 
+            using StreamWriter writer = CreateText(toFile);
+            // With the StreamWriter, for each entry in the entry list passed in...
             fromEntryList.ForEach(entry =>
             {
+                // ...get the entry number
                 int entryNumber = fromEntryList.IndexOf(entry);
+                // ...trim the phone number of dashes.
                 string trimmedPhoneNumber = Regex.Replace(entry.PhoneNumber, "-", "");
+                // ...and write that entry's number, name, address, and phone number trimmed of dashes to the file on a single line.
                 writer.WriteLine($"Entry {entryNumber + 1}:\tName: {entry.Name},\tAddress: {entry.Address},\tphone number: *{trimmedPhoneNumber}*");
             });
         }
 
-
+        private static void OpenTextFileWithNotepad(string fileName)
+        {
+            Process.Start("notepad.exe", fileName);
+        }
     }
 }
